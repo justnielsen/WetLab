@@ -6,9 +6,13 @@ model PipeLine
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
       choicesAllMatching=true);
 
+      parameter SI.MassFlowRate[4] m_flow_nominal_pipes = {4,3,2,1} "Nominal mass flow rates through pipes 1–4" annotation(Dialog(group="Nominal condition"));
+      parameter SI.MassFlowRate[3] m_flow_nominal_valves = {max(0,m_flow_nominal_pipes[i]-m_flow_nominal_pipes[i-1]) for i in 2:4} "Nominal mass flow rates through pipes 1–4" annotation(Dialog(group="Nominal condition"));
+
   // Main components
   replaceable Buildings.Fluid.FixedResistances.Pipe pipe_1(
     redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_pipes[1],
     nSeg=2,
     thicknessIns=0,
     lambdaIns=1,
@@ -20,6 +24,7 @@ model PipeLine
     Dialog(group="Pipe specifications"));
   replaceable Buildings.Fluid.FixedResistances.Pipe pipe_2(
     redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_pipes[2],
     nSeg=2,
     thicknessIns=0,
     lambdaIns=1,
@@ -31,6 +36,7 @@ model PipeLine
     Dialog(group="Pipe specifications"));
   replaceable Buildings.Fluid.FixedResistances.Pipe pipe_3(
     redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_pipes[3],
     nSeg=2,
     thicknessIns=0,
     lambdaIns=1,
@@ -42,6 +48,7 @@ model PipeLine
     Dialog(group="Pipe specifications"));
   replaceable Buildings.Fluid.FixedResistances.Pipe pipe_4(
     redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_pipes[4],
     nSeg=2,
     thicknessIns=0,
     lambdaIns=1,
@@ -54,6 +61,7 @@ model PipeLine
 
   replaceable Buildings.Fluid.Actuators.Valves.TwoWayEqualPercentage valve_1(
       redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_valves[1],
     CvData=Buildings.Fluid.Types.CvTypes.Kv,
     Kv=19,
     riseTime=12) "Bürkert ball valve (on/off)"
@@ -66,6 +74,7 @@ model PipeLine
     Dialog(group="Valve specifications"));
   replaceable Buildings.Fluid.Actuators.Valves.TwoWayEqualPercentage valve_2(
       redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_valves[2],
     CvData=Buildings.Fluid.Types.CvTypes.Kv,
     Kv=19,
     riseTime=12) "Bürkert ball valve (on/off)"
@@ -78,6 +87,7 @@ model PipeLine
     Dialog(group="Valve specifications"));
   replaceable Buildings.Fluid.Actuators.Valves.TwoWayEqualPercentage valve_3(
       redeclare package Medium = Medium,
+    m_flow_nominal=m_flow_nominal_valves[3],
     CvData=Buildings.Fluid.Types.CvTypes.Kv,
     Kv=19,
     riseTime=12) "Bürkert ball valve (on/off)"
@@ -90,42 +100,60 @@ model PipeLine
     Dialog(group="Valve specifications"));
 
   // Junctions
-  Buildings.Fluid.FixedResistances.Junction junction_1(redeclare package Medium
-      = Medium, dp_nominal={0,0,0})
+  Buildings.Fluid.FixedResistances.Junction junction_1(redeclare package Medium =
+        Medium,
+    m_flow_nominal={m_flow_nominal_pipes[1],-m_flow_nominal_valves[1],-
+        m_flow_nominal_pipes[2]},
+                dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{-80,-50},{-60,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_2(redeclare package Medium
-      = Medium, dp_nominal={0,0,0})
+  Buildings.Fluid.FixedResistances.Junction junction_2(redeclare package Medium =
+        Medium,
+    m_flow_nominal={m_flow_nominal_pipes[2],-m_flow_nominal_valves[2],-
+        m_flow_nominal_pipes[3]},
+                dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{0,-50},{20,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_3(redeclare package Medium
-      = Medium, dp_nominal={0,0,0})
+  Buildings.Fluid.FixedResistances.Junction junction_3(redeclare package Medium =
+        Medium,
+    m_flow_nominal={m_flow_nominal_pipes[3],-m_flow_nominal_valves[3],-
+        m_flow_nominal_pipes[4]},
+                dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{80,-50},{100,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_4(redeclare package Medium
-      = Medium, dp_nominal={0,0,0})
+  Buildings.Fluid.FixedResistances.Junction junction_4(redeclare package Medium =
+        Medium,
+    m_flow_nominal={m_flow_nominal_valves[1],m_flow_nominal_valves[2],-(
+        m_flow_nominal_valves[1] + m_flow_nominal_valves[2])},
+                dp_nominal={0,0,0})
                 annotation (Placement(transformation(extent={{0,-10},{20,10}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_5(redeclare package Medium
-      = Medium, dp_nominal={0,0,0})
+  Buildings.Fluid.FixedResistances.Junction junction_5(redeclare package Medium =
+        Medium,
+    m_flow_nominal={m_flow_nominal_valves[1] + m_flow_nominal_valves[2],
+        m_flow_nominal_valves[3],-sum(m_flow_nominal_valves)},
+                dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{80,-10},{100,10}})),
     Dialog(group="Junctions"));
 
   // Sensors
   replaceable Buildings.Fluid.Sensors.TemperatureTwoPort temperature_1(
-      redeclare package Medium = Medium) constrainedby
+      redeclare package Medium = Medium, m_flow_nominal=m_flow_nominal_pipes[1])
+                                         constrainedby
     Buildings.Fluid.Interfaces.PartialTwoPort annotation (Placement(
         transformation(extent={{-190,-70},{-170,-50}})),
       choicesAllMatching=true,
     Dialog(tab="Sensors", group="Temperature"));
   replaceable Buildings.Fluid.Sensors.TemperatureTwoPort temperature_2(
-      redeclare package Medium = Medium) constrainedby
+      redeclare package Medium = Medium, m_flow_nominal=sum(
+        m_flow_nominal_valves))          constrainedby
     Buildings.Fluid.Interfaces.PartialTwoPort annotation (Placement(
         transformation(extent={{120,-10},{140,10}})),
       choicesAllMatching=true,
     Dialog(tab="Sensors", group="Temperature"));
   replaceable Buildings.Fluid.Sensors.TemperatureTwoPort temperature_3(
-      redeclare package Medium = Medium) constrainedby
+      redeclare package Medium = Medium, m_flow_nominal=m_flow_nominal_pipes[4])
+                                         constrainedby
     Buildings.Fluid.Interfaces.PartialTwoPort annotation (Placement(
         transformation(extent={{150,-70},{170,-50}})),
       choicesAllMatching=true,
