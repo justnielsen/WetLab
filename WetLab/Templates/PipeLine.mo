@@ -100,36 +100,36 @@ model PipeLine
     Dialog(group="Valve specifications"));
 
   // Junctions
-  Buildings.Fluid.FixedResistances.Junction junction_1(redeclare package Medium =
-        Medium,
+  Buildings.Fluid.FixedResistances.Junction junction_1(redeclare package Medium
+      = Medium,
     m_flow_nominal={m_flow_nominal_pipes[1],-m_flow_nominal_valves[1],-
         m_flow_nominal_pipes[2]},
                 dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{-80,-50},{-60,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_2(redeclare package Medium =
-        Medium,
+  Buildings.Fluid.FixedResistances.Junction junction_2(redeclare package Medium
+      = Medium,
     m_flow_nominal={m_flow_nominal_pipes[2],-m_flow_nominal_valves[2],-
         m_flow_nominal_pipes[3]},
                 dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{0,-50},{20,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_3(redeclare package Medium =
-        Medium,
+  Buildings.Fluid.FixedResistances.Junction junction_3(redeclare package Medium
+      = Medium,
     m_flow_nominal={m_flow_nominal_pipes[3],-m_flow_nominal_valves[3],-
         m_flow_nominal_pipes[4]},
                 dp_nominal={0,0,0})
     annotation (Placement(transformation(extent={{80,-50},{100,-70}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_4(redeclare package Medium =
-        Medium,
+  Buildings.Fluid.FixedResistances.Junction junction_4(redeclare package Medium
+      = Medium,
     m_flow_nominal={m_flow_nominal_valves[1],m_flow_nominal_valves[2],-(
         m_flow_nominal_valves[1] + m_flow_nominal_valves[2])},
                 dp_nominal={0,0,0})
                 annotation (Placement(transformation(extent={{0,-10},{20,10}})),
     Dialog(group="Junctions"));
-  Buildings.Fluid.FixedResistances.Junction junction_5(redeclare package Medium =
-        Medium,
+  Buildings.Fluid.FixedResistances.Junction junction_5(redeclare package Medium
+      = Medium,
     m_flow_nominal={m_flow_nominal_valves[1] + m_flow_nominal_valves[2],
         m_flow_nominal_valves[3],-sum(m_flow_nominal_valves)},
                 dp_nominal={0,0,0})
@@ -237,12 +237,12 @@ equation
           70},{-146,70},{-146,-50},{-151,-50}}, color={255,170,213}));
   connect(transducers.m_flow_1, massFlow_3.m_flow) annotation (Line(points={{-20,
           90},{-20,70},{-140,70},{-140,-49}}, color={255,170,213}));
-  connect(actuators.opening_1, valve_1.y) annotation (Line(points={{20,90},{20,50},
-          {-100,50},{-100,-30},{-82,-30}}, color={213,255,170}));
-  connect(actuators.opening_2, valve_2.y) annotation (Line(points={{20,90},{20,50},
-          {-20,50},{-20,-30},{-2,-30}}, color={213,255,170}));
-  connect(actuators.opening_3, valve_3.y) annotation (Line(points={{20,90},{20,50},
-          {60,50},{60,-30},{78,-30}}, color={213,255,170}));
+  connect(actuators.opening_1, valve_1.y) annotation (Line(points={{20,90},{20,
+          50},{-100,50},{-100,-30},{-82,-30}}, color={0,220,127}));
+  connect(actuators.opening_2, valve_2.y) annotation (Line(points={{20,90},{20,
+          50},{-20,50},{-20,-30},{-2,-30}}, color={0,220,127}));
+  connect(actuators.opening_3, valve_3.y) annotation (Line(points={{20,90},{20,
+          50},{60,50},{60,-30},{78,-30}}, color={0,220,127}));
   connect(transducers.T_2, temperature_2.T) annotation (Line(points={{-20,90},{-20,
           70},{130,70},{130,11}}, color={255,170,213}));
   connect(transducers.p_2, pressure_2.p) annotation (Line(points={{-20,90},{-20,

@@ -5,7 +5,8 @@ expandable connector Actuators "Actuator bus"
     Diagram(coordinateSystem(preserveAspectRatio=false)),
     Icon(graphics={Polygon(
           points={{-100,100},{100,100},{100,0},{100,-100},{-100,-100},{-100,100}},
-          lineColor={213,255,170},
+
+          lineColor={0,220,127},
           fillColor={0,127,127},
           fillPattern=FillPattern.Solid), Text(
           extent={{-60,60},{60,-60}},
