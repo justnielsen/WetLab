@@ -1,9 +1,16 @@
 within WetLab.Interfaces;
-expandable connector Transducers "Measurement bus"
-  PipelineTransducers pipelineTransducers_a "Sub-bus for pipeline A measurements in pipe station";
-  PipelineTransducers pipelineTransducers_b "Sub-bus for pipeline B measurements in pipe station";
-  PipelineTransducers pipelineTransducers_c "Sub-bus for pipeline C measurements in pipe station";
-  PipelineTransducers pipelineTransducers_d "Sub-bus for pipeline D measurements in pipe station";
+expandable connector PipelineTransducers
+  "Measurement bus for single pipeline module"
+
+  SI.Temperature T1 "Temperature at port_1";
+  SI.Temperature T2 "Temperature at port_2";
+  SI.Temperature T3 "Temperature at port_3";
+
+  Real p1 "Pressure at port_1";
+  Real p2 "Pressure at port_2";
+  Real p3 "Pressure at port_3";
+
+  SI.MassFlowRate m_flow3 "Mass flow entering at port_1";
 
   annotation (
     preferredView="text",
@@ -19,4 +26,4 @@ expandable connector Transducers "Measurement bus"
           fillPattern=FillPattern.Solid,
           textString="T")}));
 
-end Transducers;
+end PipelineTransducers;

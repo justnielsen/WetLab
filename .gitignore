@@ -263,3 +263,7 @@ Modelica/VCL/GEA-data/VPexperiments/stop
 Modelica/VCL/GEA-data/VPexperiments/status
 
 Modelica/VCL/GEA-data/VPexperiments/request
+
+WetLab/request
+
+WetLab/status

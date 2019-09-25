@@ -1,9 +1,10 @@
 within WetLab.Interfaces;
-expandable connector Actuators "Actuator bus"
-  PipelineActuators pipelineActuators_a "Sub-bus for pipeline A actuator signals in pipe station";
-  PipelineActuators pipelineActuators_b "Sub-bus for pipeline B actuator signals in pipe station";
-  PipelineActuators pipelineActuators_c "Sub-bus for pipeline C actuator signals in pipe station";
-  PipelineActuators pipelineActuators_d "Sub-bus for pipeline D actuator signals in pipe station";
+expandable connector PipelineActuators
+  "Actuator bus for single pipeline module"
+
+  Real valve_opening1 "Opening of valve_1";
+  Real valve_opening2 "Opening of valve_2";
+  Real valve_opening3 "Opening of valve_3";
 
   annotation (
     preferredView="text",
@@ -20,4 +21,4 @@ expandable connector Actuators "Actuator bus"
           textString="A")}),
     Documentation(info="<html>
 </html>"));
-end Actuators;
+end PipelineActuators;
